@@ -1,0 +1,3 @@
+config HUAWEI_ZCDEV
+    default y if PCI_DEVICES
+    depends on ZCDEV && PCI && MSI_NONBROKEN

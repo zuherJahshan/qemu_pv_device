@@ -1792,6 +1792,9 @@ config_devices_h = {}
 config_target_h = {}
 config_target_mak = {}
 
+have_zcdev = not get_option('zcdev').disabled()
+#have_zcdev = get_option('zcdev').allowed()
+
 disassemblers = {
   'alpha' : ['CONFIG_ALPHA_DIS'],
   'arm' : ['CONFIG_ARM_DIS'],
@@ -1831,6 +1834,7 @@ host_kconfig = \
   (have_ivshmem ? ['CONFIG_IVSHMEM=y'] : []) + \
   ('CONFIG_OPENGL' in config_host ? ['CONFIG_OPENGL=y'] : []) + \
   (x11.found() ? ['CONFIG_X11=y'] : []) + \
+  (have_zcdev ? ['CONFIG_ZCDEV=y'] : []) + \
   ('CONFIG_VHOST_USER' in config_host ? ['CONFIG_VHOST_USER=y'] : []) + \
   ('CONFIG_VHOST_VDPA' in config_host ? ['CONFIG_VHOST_VDPA=y'] : []) + \
   ('CONFIG_VHOST_KERNEL' in config_host ? ['CONFIG_VHOST_KERNEL=y'] : []) + \
@@ -3070,6 +3074,8 @@ if have_tools
                dependencies: [blockdev, qemuutil, gnutls, selinux],
                install: true)
 
+
+
   subdir('storage-daemon')
   subdir('contrib/rdmacm-mux')
   subdir('contrib/elf2dmp')
@@ -3187,6 +3193,7 @@ summary_info = {}
 summary_info += {'Documentation':     build_docs}
 summary_info += {'system-mode emulation': have_system}
 summary_info += {'user-mode emulation': have_user}
+summary_info += {'ZCDEV support':     have_zcdev}
 summary_info += {'block layer':       have_block}
 summary_info += {'Install blobs':     get_option('install_blobs')}
 summary_info += {'module support':    config_host.has_key('CONFIG_MODULES')}

@@ -35,6 +35,9 @@ config VHOST_KERNEL
 config VIRTFS
     bool
 
+config ZCDEV
+    bool
+
 config PVRDMA
     bool
 

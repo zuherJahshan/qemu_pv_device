@@ -27,6 +27,7 @@ source pci-bridge/Kconfig
 source pci-host/Kconfig
 source pcmcia/Kconfig
 source pci/Kconfig
+source pv_dev/Kconfig
 source rdma/Kconfig
 source remote/Kconfig
 source rtc/Kconfig
