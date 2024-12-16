@@ -24,6 +24,7 @@
 #include "cpu.h"
 #include "monitor/monitor.h"
 #include "sysemu/runstate.h"
+#include "qemu/log.h"
 
 #define INTERFACE_ZCDEV_PROVIDER "zcdev"
 #define BAR0_REGS_SIZE (2 << 29)
@@ -60,8 +61,12 @@ static uint64_t zcdev_regs_read(void *opaque, hwaddr addr, unsigned size)
     ZCDev *dev = opaque;
 
     if (addr > BAR0_REGS_SIZE) {
+        qemu_log("zcdev: read out of bounds (addr=0x%"HWADDR_PRIx"\n", addr);
         return 0xfffffff;
     }
+
+    qemu_log("zcdev: Read from addr=0x%"HWADDR_PRIx", size=%u, value=0x%x\n",
+        addr, size, dev->regs_data[addr]);
 
     return dev->regs_data[addr];
 }
@@ -72,9 +77,13 @@ static void zcdev_regs_write(void *opaque, hwaddr addr, uint64_t val,
     ZCDev *dev = opaque;
 
     if (addr > BAR0_REGS_SIZE) {
+        qemu_log("zcdev: Write out of bounds (addr=0x%"HWADDR_PRIx")\n", addr);
         return;
     }
+
     dev->regs_data[addr] = val;
+    qemu_log("zcdev: Write to addr=0x%"HWADDR_PRIx", size=%u, value=0x%"PRIx64"\n",
+        addr, size, val);
 }
 
 static const MemoryRegionOps regs_ops = {

@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	}
 
 	p = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
-	//p = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+	p = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 	if (!p) {
 		printf("mmap\n");
 		return 1;
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
 	if (argc == 2) {
 		strcpy(p, argv[1]);
-		printf("%s\n", p);
+	printf("%s\n", p);
 	}
 
 	munmap(p, 1024);
