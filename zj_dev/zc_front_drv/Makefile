@@ -1,4 +1,4 @@
-obj-m += zc_front.o
+obj-m += bytex_main.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules

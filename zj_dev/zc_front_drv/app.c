@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	p = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 	p = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 	if (!p) {
 		printf("mmap\n");

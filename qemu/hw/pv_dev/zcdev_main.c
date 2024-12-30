@@ -56,6 +56,7 @@ struct ZcdevProviderClass {
     void (*format_statistics)(ZcdevProvider *obj, GString *buf);
 };
 
+
 static uint64_t zcdev_regs_read(void *opaque, hwaddr addr, unsigned size)
 {
     ZCDev *dev = opaque;

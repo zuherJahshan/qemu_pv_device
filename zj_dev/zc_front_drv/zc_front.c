@@ -115,7 +115,8 @@ static int zcdev_pci_probe(struct pci_dev *pdev,
 	int rc = -EIO;
 	struct zcdev *dev;
 
-	dev = devm_kzalloc(&pdev->dev, sizeof(*dev), GFP_KERNEL);
+    // 1. Enable the device
+    dev = devm_kzalloc(&pdev->dev, sizeof(*dev), GFP_KERNEL);
 	if (!dev) {
 		dev_err(&pdev->dev, "Fail to alloc memory for zcdev\n");
 		return -EIO;
@@ -133,6 +134,7 @@ static int zcdev_pci_probe(struct pci_dev *pdev,
 		goto err_free_dev;
 	}
 
+    // 2. Request MMIO/IOP resources
 	if (!(pci_resource_flags(pdev, 0) & IORESOURCE_MEM)) {
 		dev_err(&pdev->dev, "PCI BAR region not MMIO\n");
 		goto err_disable_pdev;
@@ -148,13 +150,15 @@ static int zcdev_pci_probe(struct pci_dev *pdev,
 		goto err_disable_pdev;
 	}
 
+    // 3. Set the DMA mask size
 	rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
 	if (rc) {
 		dev_err(&pdev->dev, "dma_set_mask failed\n");
 		goto err_free_regions;
 	}
 	dma_set_max_seg_size(&pdev->dev, UINT_MAX);
-	pci_set_master(pdev);
+    // Enable DMA
+    pci_set_master(pdev);
 
 	rc = -ENOMEM;
 
@@ -165,6 +169,7 @@ static int zcdev_pci_probe(struct pci_dev *pdev,
 		goto err_free_regions;
 	}
 
+    // this is buggy
 	bar0 = pci_resource_start(pdev, 0);
 	dev_info(&pdev->dev, "data1: %s\n", (char *)dev->regs);
 	strcpy((char *)dev->regs, "test3");
