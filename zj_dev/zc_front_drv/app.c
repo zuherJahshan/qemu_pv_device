@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	char *p;
 	int fd;
 
-	fd = open("/dev/zcdrv_0", O_RDWR);
+	fd = open("/dev/zcdrv0", O_RDWR);
 	if (fd < 0) {
 		printf("open %d\n", fd);
 		return 1;

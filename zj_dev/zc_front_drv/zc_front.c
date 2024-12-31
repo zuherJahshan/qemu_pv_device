@@ -282,24 +282,6 @@ static int zcdev_char_mmap(struct file *filp, struct vm_area_struct *vma)
 		return -1;
 	}
 
-	//vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
-
-	//pfn = virt_to_phys((void *)zcdev->regs) >> PAGE_SHIFT;
-
-	/*
-	strcpy(p, "test");
-	printk(KERN_INFO "%s\n", p);
-	pfn = virt_to_phys((void *)p) >> PAGE_SHIFT;
-	printk(KERN_INFO "pfn=%ld\n", pfn);
-	len = vma->vm_end - vma->vm_start;
-	printk(KERN_INFO "len=%ld\n", len);
-	rc = remap_pfn_range(vma, vma->vm_start, pfn, len, vma->vm_page_prot);
-	if (rc < 0) {
-		printk(KERN_INFO "error in %s\n", "remap_pfn_range");
-		return -1;
-	}
-	*/
-
 	return 0;
 }
 

@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define DEVICE "/dev/zcdrv_0"
+#define DEVICE "/dev/zcdrv0"
 #define PAGE 4096 // 4KB
 #define SIZE (10*PAGE) // 10 pages
 
